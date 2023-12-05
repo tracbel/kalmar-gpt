@@ -94,7 +94,7 @@ const Layout = () => {
                             aria-hidden="true"
                         />
                         <Link to="/" className={styles.headerTitleContainer}>
-                            <h1 className={styles.headerTitle}>TracGPT</h1>
+                            <h1 className={styles.headerTitle}>TracGPT(Beta)</h1>
                         </Link>
                     </Stack>
                     {/* TODO:BTN HISTORICO */}
