@@ -662,7 +662,28 @@ const Chat = () => {
                             )}
                             {/* TODO: Btn chat */}
                             <Stack>
-                                {appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured && <CommandBarButton
+
+                            <CommandBarButton
+                                     role="button"
+                                     styles={{ 
+                                         icon: { 
+                                             color: '#FFFFFF',
+                                         },
+                                         root: {
+                                             color: '#FFFFFF',
+                                             background: "radial-gradient(109.81% 107.82% at 100.1% 90.19%, #fbbb00 33.63%, #fac937 70.31%, #f7cd4f 100%)"
+                                         },
+                                         rootDisabled: {
+                                             background: "#BDBDBD"
+                                         }
+                                     }}
+                                    className={appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured ? styles.newChatIcon : styles.newChatIcon}
+                                    iconProps={{ iconName: 'Broom' }}
+                                    onClick={appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured ? clearChat : newChat}
+                                    disabled={disabledButton()}
+                                    aria-label="botão limpar bate-papo"
+                                />
+                                {/* {appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured && <CommandBarButton
                                     role="button"
                                     styles={{ 
                                         icon: { 
@@ -681,25 +702,8 @@ const Chat = () => {
                                     onClick={newChat}
                                     disabled={disabledButton()}
                                     aria-label="iniciar um novo botão de bate-papo"
-                                />}
-                                <CommandBarButton
-                                    role="button"
-                                    styles={{ 
-                                        icon: { 
-                                            color: '#FFFFFF',
-                                        },
-                                        root: {
-                                            color: '#FFFFFF',
-                                            background: disabledButton() ? "#BDBDBD" : "radial-gradient(109.81% 107.82% at 100.1% 90.19%, #fbbb00 33.63%, #fac937 70.31%, #f7cd4f 100%)",
-                                            cursor: disabledButton() ? "" : "pointer"
-                                        },
-                                    }}
-                                    className={appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured ? styles.clearChatBroom : styles.clearChatBroomNoCosmos}
-                                    iconProps={{ iconName: 'Broom' }}
-                                    onClick={appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured ? clearChat : newChat}
-                                    disabled={disabledButton()}
-                                    aria-label="botão limpar bate-papo"
-                                />
+                                />} */}
+                               
                                 <Dialog
                                     hidden={hideErrorDialog}
                                     onDismiss={handleErrorDialogClose}
