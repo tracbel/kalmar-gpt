@@ -98,7 +98,7 @@ const Layout = () => {
                         </Link>
                     </Stack>
                     {/* TODO:BTN HISTORICO */}
-                    <Stack horizontal tokens={{ childrenGap: 4 }}>
+                    {/* <Stack horizontal tokens={{ childrenGap: 4 }}>
                             {(appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured) && 
                                 !isMobile && (<HistoryButton hidden={isMobile} onClick={handleHistoryClick} text={isMobile 
                                     ? '' 
@@ -108,7 +108,7 @@ const Layout = () => {
                                       )}/>)    
                             }
                             <ShareButton onClick={handleShareClick} />
-                    </Stack>
+                    </Stack> */}
 
                 </Stack>
             </header>

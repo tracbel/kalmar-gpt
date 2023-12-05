@@ -575,7 +575,7 @@ const Chat = () => {
     return (
         <div className={styles.container} role="main">
             {/* TODO:Ajustar condicional */}
-            {showAuthMessage ? (
+            {!showAuthMessage ? (
                 <Stack className={styles.chatEmptyState}>
                     <ShieldLockRegular className={styles.chatIcon} style={{color: 'darkorange', height: "200px", width: "200px"}}/>
                     <h1 className={styles.chatEmptyStateTitle}>Authentication Not Configured</h1>
@@ -598,8 +598,8 @@ const Chat = () => {
                                     className={styles.chatIcon}
                                     aria-hidden="true"
                                 />
-                                <h1 className={styles.chatEmptyStateTitle}>Começar a conversar</h1>
-                                <h2 className={styles.chatEmptyStateSubtitle}>O TracGPT foi desenvolvido para responder às suas perguntas</h2>
+                                <h1 className={styles.chatEmptyStateTitle}>Vamos conversar?</h1>
+                                <h2 className={styles.chatEmptyStateSubtitle}>O TracGPT foi desenvolvido para responder sobre o Grupo Tracbel</h2>
                             </Stack>
                         ) : (
                             <div className={styles.chatMessageStream} style={{ marginBottom: isLoading ? "40px" : "0px"}} role="log">
