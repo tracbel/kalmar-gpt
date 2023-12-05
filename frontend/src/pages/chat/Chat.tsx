@@ -599,7 +599,7 @@ const Chat = () => {
                                     aria-hidden="true"
                                 />
                                 <h1 className={styles.chatEmptyStateTitle}>Vamos conversar?</h1>
-                                <h2 className={styles.chatEmptyStateSubtitle}>O TracGPT foi desenvolvido para responder sobre o Grupo Tracbel</h2>
+                                <h2 className={styles.chatEmptyStateSubtitle}>O TracGPT foi treinado para fornecer informações sobre o Grupo Tracbel.</h2>
                             </Stack>
                         ) : (
                             <div className={styles.chatMessageStream} style={{ marginBottom: isLoading ? "40px" : "0px"}} role="log">
