@@ -575,7 +575,7 @@ const Chat = () => {
     return (
         <div className={styles.container} role="main">
             {/* TODO:Ajustar condicional */}
-            {!showAuthMessage ? (
+            {showAuthMessage ? (
                 <Stack className={styles.chatEmptyState}>
                     <ShieldLockRegular className={styles.chatIcon} style={{color: 'darkorange', height: "200px", width: "200px"}}/>
                     <h1 className={styles.chatEmptyStateTitle}>Authentication Not Configured</h1>
