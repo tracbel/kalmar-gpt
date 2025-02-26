@@ -5,7 +5,7 @@ import Logo from "../../assets/logo-tracbel.png";
 import { CopyRegular, ShareRegular } from "@fluentui/react-icons";
 import { CommandBarButton, Dialog, Stack, TextField, ICommandBarStyles, IButtonStyles, DefaultButton  } from "@fluentui/react";
 import { useContext, useEffect, useState } from "react";
-import { HistoryButton, ShareButton } from "../../components/common/Button";
+import { ShareButton } from "../../components/common/Button";
 import { AppStateContext } from "../../state/AppProvider";
 import { CosmosDBStatus } from "../../api";
 
@@ -14,7 +14,7 @@ const shareButtonStyles: ICommandBarStyles & IButtonStyles = {
       width: 86,
       height: 32,
       borderRadius: 4,
-      background: '#fbbb00',
+      background: '#f30000',
     //   'radial-gradient(109.81% 107.82% at 100.1% 90.19%, #0F6CBD 33.63%, #2D87C3 70.31%, #8DDDD8 100%)',
     //   position: 'absolute',
     //   right: 20,
@@ -25,7 +25,7 @@ const shareButtonStyles: ICommandBarStyles & IButtonStyles = {
       color: '#FFFFFF',
     },
     rootHovered: {
-      background: 'linear-gradient(135deg, #fac937 0%, #f7cd4f 51.04%, #f7cd4f 100%)',
+      background: 'linear-gradient(135deg, #f30000 0%, #f30000 51.04%, #f30000 100%)',
     },
     label: {
       fontWeight: 600,
@@ -85,7 +85,6 @@ const Layout = () => {
         <div className={styles.layout}>
             <header className={styles.header} role={"banner"}>
                 <Stack horizontal verticalAlign="center" horizontalAlign="space-between"
-                // className={styles.headerContainer}
                 >
                     <Stack horizontal verticalAlign="center">
                         <img
@@ -94,21 +93,13 @@ const Layout = () => {
                             aria-hidden="true"
                         />
                         <Link to="/" className={styles.headerTitleContainer}>
-                            <h1 className={styles.headerTitle}>TracGPT(Beta)</h1>
+                            <h1 className={styles.headerTitle}>KalmarGPT</h1>
                         </Link>
                     </Stack>
                     {/* TODO:BTN HISTORICO */}
-                    {/* <Stack horizontal tokens={{ childrenGap: 4 }}>
-                            {(appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured) && 
-                                !isMobile && (<HistoryButton hidden={isMobile} onClick={handleHistoryClick} text={isMobile 
-                                    ? '' 
-                                    : (appStateContext?.state?.isChatHistoryOpen 
-                                        ? "Ocultar histórico de bate-papo" 
-                                        : "Mostrar histórico de bate-papo"
-                                      )}/>)    
-                            }
+                    <Stack horizontal tokens={{ childrenGap: 4 }}>
                             <ShareButton onClick={handleShareClick} />
-                    </Stack> */}
+                    </Stack>
 
                 </Stack>
             </header>
@@ -132,7 +123,6 @@ const Layout = () => {
                       }]
                 }}
                 dialogContentProps={{
-                    // title: "Share the web app",
                     title:"Compartilhe",
                     showCloseButton: true
                 }}

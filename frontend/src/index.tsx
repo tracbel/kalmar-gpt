@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { initializeIcons } from "@fluentui/react";
+import { registerIcons } from '@fluentui/react/lib/Styling';
 
 import "./index.css";
 
@@ -11,6 +12,12 @@ import Chat from "./pages/chat/Chat";
 import { AppStateProvider } from "./state/AppProvider";
 
 initializeIcons();
+
+registerIcons({
+    icons: {
+      Lightbulb: <i className="ms-Icon ms-Icon--Lightbulb" aria-hidden="true"></i>
+    }
+  });
 
 export default function App() {
     return (

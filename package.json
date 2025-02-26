@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@fluentui/font-icons-mdl2": "^8.5.58",
+    "@fluentui/react-icons": "^2.0.274",
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "react-icons": "^5.5.0"
+  }
+}

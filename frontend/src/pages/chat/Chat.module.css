@@ -20,35 +20,64 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: radial-gradient(108.78% 108.78% at 50.02% 19.78%, #FFFFFF 57.29%, #faf2dc 100%);
+    background: #BBB;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 0px 2px rgba(0, 0, 0, 0.12);
     border-radius: 8px;
     overflow-y: auto;
     max-height: calc(100vh - 100px);
 }
 
-.chatEmptyState {
-    flex-grow: 1;
+.chatContainerBg {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)) no-repeat right top fixed;
+    background-size: cover;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 0px 2px rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
+    overflow-y: auto;
+    max-height: calc(100vh - 100px);
+}
+
+
+
+
+.chatEmptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center; /* Garante que o texto fique centralizado */
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+
+.chatEmptyState img {
+    max-width: 100%;
+    height: auto;
 }
 
 .chatEmptyStateTitle {
     font-style: normal;
     font-weight: 700;
-    font-size: 36px;
+    font-size: 28px;
     display: flex;
     align-items: flex-end;
     text-align: center;
     line-height: 24px;
-    margin-top: 36px;
+    margin-top: 0px;
     margin-bottom: 0px;
+
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 5px;
+    border-radius: 10px; 
 }
 
 .chatEmptyStateSubtitle {
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 0;
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -57,13 +86,57 @@
     align-items: flex-end;
     text-align: center;
     letter-spacing: -0.01em;
-    color: #616161;
+    color: #000;
+    max-width: 100% !important;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 5px;
+    border-radius: 10px; 
+    
 }
 
-.chatIcon {
-    height: 289px;
-    width: 208px;
+/* Responsividade */
+@media (max-width: 768px) {
+    .chatEmptyState {
+        padding: 20px;
+    }
+
+    .chatEmptyState img {
+        max-width: 80%; /* Reduz o tamanho das imagens para caber melhor na tela */
+    }
+
+    .chatEmptyStateTitle {
+        font-size: 20px;
+    }
+
+    .chatEmptyStateSubtitle {
+        font-size: 14px;
+    }
 }
+
+
+.chatIcon {
+    height: 200px;
+    width: 200px;
+    height: auto;
+}
+
+.kalmargpt {
+    width: auto;
+    max-width: 720px !important;
+    max-height: 90vh;
+    height: auto;
+    margin-bottom: -30px;
+    object-fit: contain;
+}
+
+@media (max-width: 720px) {
+    .kalmargpt {
+        max-width: 100% !important;
+        margin-bottom: 15px;
+
+    }
+}
+
 
 .chatMessageStream {
     flex-grow: 1;
@@ -85,7 +158,7 @@
 
 .chatMessageUserMessage {
     padding: 20px;
-    background: #fae9b4;
+    background: #D8FFC8;
     border-radius: 8px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 0px 2px rgba(0, 0, 0, 0.12);
     font-style: normal;
@@ -98,12 +171,12 @@
     flex-grow: 0;
     white-space: pre-wrap;
     word-wrap: break-word;
-    max-width: 800px;
+    max-width: 100%;
 }
 
 .chatMessageGpt {
     margin-bottom: 12px;
-    max-width: 80%;
+    max-width: 100%;
     display: flex;
 }
 
@@ -328,7 +401,7 @@ a {
     font-weight: 600;
     font-size: 12px;
     line-height: 16px;
-    color: #fbbb00;
+    color: #397920;
     flex-direction: row;
     align-items: center;
     padding: 4px 6px;
@@ -341,3 +414,44 @@ a {
     text-decoration: underline;
     cursor: pointer;
 }
+
+.tooltip{
+
+    position: absolute;
+    width: 300px;
+    left: 70%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 4px;
+    z-index: 100;
+
+}
+
+.tooltip:after {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    border-top: 20px solid transparent; /* Borda superior transparente */
+    border-bottom: 20px solid transparent; /* Borda inferior transparente */
+    border-right: 20px solid #fff; /* Borda direita colorida, cria a "seta" para a esquerda */
+    left: -3%; /* Posiciona a seta no lado direito do tooltip */
+    top: 50%; /* Centraliza verticalmente */
+    transform: translateY(-50%); /* Ajuste fino da posição vertical */
+}
+
+.stackText{
+    margin: -20px 0 0 0;
+    z-index: 100;
+}
+.stackText2{
+    margin: -20px 0 0 0;
+    z-index: 100;
+    color: #bbb !important;
+}
+
+sup {
+    visibility: hidden !important;
+    display: none !important;
+  }

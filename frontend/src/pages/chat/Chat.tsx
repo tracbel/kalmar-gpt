@@ -1,17 +1,13 @@
 import { useRef, useState, useEffect, useContext, useLayoutEffect } from "react";
-import { CommandBarButton, IconButton, Dialog, DialogType, Stack } from "@fluentui/react";
+import { CommandBarButton, IconButton, Dialog, DialogType, Stack, Modal, IModalStyles, Spinner } from "@fluentui/react";
 import { DismissRegular, SquareRegular, ShieldLockRegular, ErrorCircleRegular } from "@fluentui/react-icons";
 
-import ReactMarkdown from "react-markdown";
-import remarkGfm from 'remark-gfm'
-import rehypeRaw from "rehype-raw";
 import uuid from 'react-uuid';
 import { isEmpty } from "lodash-es";
 
 import styles from "./Chat.module.css";
-import Azure from "../../assets/Azure.svg";
-import Logo from "../../assets/logo-tracbel.png";
 import Mascote from "../../assets/mascote.png";
+import Kalmar from "../../assets/kalmargpt.png";
 
 import {
     ChatMessage,
@@ -42,6 +38,22 @@ const enum messageStatus {
 }
 
 const Chat = () => {
+    // TODO: Modal citação
+    const [showModal, setShowModal] = useState(false);
+    const modalStyles: Partial<IModalStyles> = {
+        main: {
+          borderRadius: '8px',
+        },
+      };
+
+    const openModal = () => {
+      setShowModal(true);
+    };
+    
+    const dismissModal = () => {
+      setShowModal(false);
+    };
+
     const appStateContext = useContext(AppStateContext)
     const chatMessageStreamEnd = useRef<HTMLDivElement | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -71,12 +83,18 @@ const Chat = () => {
     }
 
     const [ASSISTANT, TOOL, ERROR] = ["assistant", "tool", "error"]
-
+    // Mobile
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
     const handleResize = () => {
         setIsMobile(window.innerWidth < 768);
     };
+
+    // Tooltip
+    const [showIframeTooltip, setShowIframeTooltip] = useState(false);
+    const handleMouseEnterIframe = () => setShowIframeTooltip(true);
+    const handleMouseLeaveIframe = () => setShowIframeTooltip(false);
+    
 
     useEffect(() => {
         if(appStateContext?.state.isCosmosDBAvailable?.status === CosmosDBStatus.NotWorking && appStateContext.state.chatHistoryLoadingState === ChatHistoryLoadingState.Fail && hideErrorDialog){
@@ -104,14 +122,19 @@ const Chat = () => {
        setIsLoading(appStateContext?.state.chatHistoryLoadingState === ChatHistoryLoadingState.Loading)
     }, [appStateContext?.state.chatHistoryLoadingState])
 
+    // TODO: AUTENTICAÇÃo
+    // const getUserInfoList = async () => {
+    //     const userInfoList = await getUserInfo();
+    //     if (userInfoList.length === 0 && window.location.hostname !== "127.0.0.1") {
+    //         setShowAuthMessage(true);
+    //     }
+    //     else {
+    //         setShowAuthMessage(false);
+    //     }
+    // }
+
     const getUserInfoList = async () => {
-        const userInfoList = await getUserInfo();
-        if (userInfoList.length === 0 && window.location.hostname !== "127.0.0.1") {
-            setShowAuthMessage(true);
-        }
-        else {
-            setShowAuthMessage(false);
-        }
+        setShowAuthMessage(false);
     }
 
     let assistantMessage = {} as ChatMessage
@@ -544,16 +567,16 @@ const Chat = () => {
         chatMessageStreamEnd.current?.scrollIntoView({ behavior: "smooth" })
     }, [showLoadingMessage, processMessages]);
 
-    const onShowCitation = (citation: Citation) => {
-        setActiveCitation(citation);
-        setIsCitationPanelOpen(true);
-    };
+    // const onShowCitation = (citation: Citation) => {
+    //     setActiveCitation(citation);
+    //     setIsCitationPanelOpen(true);
+    // };
 
-    const onViewSource = (citation: Citation) => {
-        if (citation.url && !citation.url.includes("blob.core")) {
-            window.open(citation.url, "_blank");
-        }
-    };
+    // const onViewSource = (citation: Citation) => {
+    //     if (citation.url && !citation.url.includes("blob.core")) {
+    //         window.open(citation.url, "_blank");
+    //     }
+    // };
 
     const parseCitationFromMessage = (message: ChatMessage) => {
         if (message?.role && message?.role === "tool") {
@@ -590,17 +613,51 @@ const Chat = () => {
                 </Stack>
             ) : (
                 <Stack horizontal className={styles.chatRoot}>
-                    <div className={styles.chatContainer}>
+                    <div className={!messages || messages.length < 1 ? (styles.chatContainerBg):(styles.chatContainerBg)}>
                         {!messages || messages.length < 1 ? (
-                            <Stack className={styles.chatEmptyState}>
+                            // <Stack className={styles.chatEmptyState}>
+                            //     <img
+                            //         src={Mascote}
+                            //         className={styles.chatIcon}
+                            //         aria-hidden="true"
+                            //     />
+                            //     <h1 className={styles.chatEmptyStateTitle}>Vamos conversar?</h1>
+                            //     <h2 className={styles.chatEmptyStateSubtitle}>O TracGPT foi treinado para fornecer informações sobre o Grupo Tracbel.</h2>
+                            // </Stack>
+                            // <Stack className={styles.chatEmptyState}>
+                            //     <iframe
+                            //         src="https://studiowox.com/projetos/tracbel/"
+                            //         style={{ width: "100%", height: "380px", border: "none", margin: "0 0 -30px 0"}}
+                            //         title="Conteúdo Tracbel"
+                            //     />
+                            //     <h1 className={styles.chatEmptyStateTitle}>Vamos conversar?</h1>
+                            //     <h2 className={styles.chatEmptyStateSubtitle}>O KalmarGPT foi treinado para fornecer informações sobre as melhores Retroescavadeira do mercado.</h2>
+                            // </Stack>
+                            <Stack className={styles.chatEmptyState} onMouseEnter={handleMouseEnterIframe} onMouseLeave={handleMouseLeaveIframe}>
+                               
+                                {/* <iframe
+                                    src="https://studiowox.com/projetos/tracbel/"
+                                    style={{ width: "100%", height: "380px", border: "none", margin: "0 0 -30px 0"}}
+                                    title="Conteúdo Tracbel"
+                                />   */}
+                                {/* {showIframeTooltip &&  !isMobile && <div className={styles.tooltip}><p><b>•</b> Clique com o botão esquerdo sobre a imagem e gire para interagir.</p><p><b>•</b> Mova o scroll do mouse sobre a imagem mudar o zoom.</p>
+                                </div>}
+                                {!showIframeTooltip && <p className={styles.stackText}><i>Clique na Retroescavadeira Kalmar e gire para conhecer o melhor equipamento.</i></p>}
+                                {showIframeTooltip && <p className={styles.stackText2}><i>.</i></p>} */}
+                                <img
+                                    src={Kalmar}
+                                    className={styles.kalmargpt}
+                                    aria-hidden="true"
+                                />
                                 <img
                                     src={Mascote}
                                     className={styles.chatIcon}
                                     aria-hidden="true"
-                                />
+                                /> 
                                 <h1 className={styles.chatEmptyStateTitle}>Vamos conversar?</h1>
-                                <h2 className={styles.chatEmptyStateSubtitle}>O TracGPT foi treinado para fornecer informações sobre o Grupo Tracbel.</h2>
+                                <h2 className={styles.chatEmptyStateSubtitle}>Sou uma Inteligência Artificial desenvolvida pela Tracbel, especializada na marca Kalmar.</h2>
                             </Stack>
+
                         ) : (
                             <div className={styles.chatMessageStream} style={{ marginBottom: isLoading ? "40px" : "0px"}} role="log">
                                 {messages.map((answer, index) => (
@@ -616,7 +673,6 @@ const Chat = () => {
                                                         answer: answer.content,
                                                         citations: parseCitationFromMessage(messages[index - 1]),
                                                     }}
-                                                    onCitationClicked={c => onShowCitation(c)}
                                                 />
                                             </div> : answer.role === ERROR ? <div className={styles.chatMessageError}>
                                                 <Stack horizontal className={styles.chatMessageErrorContent}>
@@ -629,21 +685,22 @@ const Chat = () => {
                                     </>
                                 ))}
                                 {showLoadingMessage && (
-                                    <>
+                                    
                                         <div className={styles.chatMessageGpt}>
-                                            <Answer
+                                            {/* <Answer
                                                 answer={{
                                                     answer: "Gerando resposta...",
                                                     citations: []
-                                                }}
-                                                onCitationClicked={() => null}
-                                            />
+                                                }}/> */}
+                                                <Spinner label="Gerando resposta..." />
                                         </div>
-                                    </>
+
                                 )}
                                 <div ref={chatMessageStreamEnd} />
                             </div>
                         )}
+
+
 
                         <Stack horizontal className={isMobile ? styles.chatInputMobile : styles.chatInput}>
                             {isLoading && (
@@ -664,45 +721,32 @@ const Chat = () => {
                             <Stack>
 
                             <CommandBarButton
-                                     role="button"
-                                     styles={{ 
-                                         icon: { 
-                                             color: '#FFFFFF',
-                                         },
-                                         root: {
-                                             color: '#FFFFFF',
-                                             background: "radial-gradient(109.81% 107.82% at 100.1% 90.19%, #fbbb00 33.63%, #fac937 70.31%, #f7cd4f 100%)"
-                                         },
-                                         rootDisabled: {
-                                             background: "#BDBDBD"
-                                         }
-                                     }}
-                                    className={appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured ? styles.newChatIcon : styles.newChatIcon}
-                                    iconProps={{ iconName: 'Broom' }}
-                                    onClick={appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured ? clearChat : newChat}
-                                    disabled={disabledButton()}
-                                    aria-label="botão limpar bate-papo"
-                                />
-                                {/* {appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured && <CommandBarButton
-                                    role="button"
-                                    styles={{ 
-                                        icon: { 
-                                            color: '#FFFFFF',
-                                        },
-                                        root: {
-                                            color: '#FFFFFF',
-                                            background: "radial-gradient(109.81% 107.82% at 100.1% 90.19%, #fbbb00 33.63%, #fac937 70.31%, #f7cd4f 100%)"
-                                        },
-                                        rootDisabled: {
-                                            background: "#BDBDBD"
-                                        }
-                                    }}
-                                    className={styles.newChatIcon}
-                                    iconProps={{ iconName: 'Add' }}
-                                    onClick={newChat}
-                                    disabled={disabledButton()}
-                                    aria-label="iniciar um novo botão de bate-papo"
-                                />} */}
+                                role="button"
+                                styles={{ 
+                                    icon: { 
+                                        color: '#FFFFFF',
+                                    },
+                                    iconHovered: { 
+                                        color: '#FFFFFF', 
+                                    },
+                                    root: {
+                                        color: '#FFFFFF',
+                                        background: "radial-gradient(109.81% 107.82% at 100.1% 90.19%, #fbbb00 33.63%, #fac937 70.31%, #f7cd4f 100%)"
+                                    },
+                                    rootHovered: {
+                                        background: "#E29682 ", 
+                                    },
+                                    rootDisabled: {
+                                        background: "#0000"
+                                        // background: "#BDBDBD"
+                                    }
+                                }}
+                                className={appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured ? styles.newChatIcon : styles.newChatIcon}
+                                iconProps={{ iconName: 'Delete' }}
+                                onClick={appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured ? clearChat : newChat}
+                                disabled={disabledButton()}
+                                aria-label="botão limpar bate-papo"
+                            />
                                
                                 <Dialog
                                     hidden={hideErrorDialog}
@@ -723,25 +767,6 @@ const Chat = () => {
                             />
                         </Stack>
                     </div>
-                    {/* Citation Panel */}
-                    {messages && messages.length > 0 && isCitationPanelOpen && activeCitation && ( 
-                    <Stack.Item className={styles.citationPanel} tabIndex={0} role="tabpanel" aria-label="Painel de citações">
-                        <Stack aria-label="Contêiner de cabeçalho do painel de citações" horizontal className={styles.citationPanelHeaderContainer} horizontalAlign="space-between" verticalAlign="center">
-                            <span aria-label="Citações" className={styles.citationPanelHeader}>Citações</span>
-                            <IconButton iconProps={{ iconName: 'Cancel'}} aria-label="Fechar painel de citações" onClick={() => setIsCitationPanelOpen(false)}/>
-                        </Stack>
-                        <h5 className={styles.citationPanelTitle} tabIndex={0} title={activeCitation.url && !activeCitation.url.includes("blob.core") ? activeCitation.url : activeCitation.title ?? ""} onClick={() => onViewSource(activeCitation)}>{activeCitation.title}</h5>
-                        <div tabIndex={0}> 
-                        <ReactMarkdown 
-                            linkTarget="_blank"
-                            className={styles.citationPanelContent}
-                            children={activeCitation.content} 
-                            remarkPlugins={[remarkGfm]} 
-                            rehypePlugins={[rehypeRaw]}
-                        />
-                        </div>
-                    </Stack.Item>
-                )}
                 {(appStateContext?.state.isChatHistoryOpen && appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured) && <ChatHistoryPanel/>}
                 </Stack>
             )}
