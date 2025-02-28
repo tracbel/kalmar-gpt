@@ -9,6 +9,7 @@
     "watch": "tsc && vite build --watch"
   },
   "dependencies": {
+    "react-icons": "^4.11.0",
     "@fluentui/react": "^8.105.3",
     "@fluentui/react-hooks": "^8.6.29",
     "@fluentui/react-icons": "^2.0.195",

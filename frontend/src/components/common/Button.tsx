@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { CommandBarButton, IButtonProps, ICommandBarStyles, IButtonStyles, Modal, IconButton, Stack, IModalStyles, Icon } from '@fluentui/react';
 
+import { FaLightbulb, FaTimes  } from "react-icons/fa";
+
 interface ShareButtonProps extends IButtonProps {
   onClick: () => void;
 }
@@ -39,7 +41,7 @@ export const ShareButton: React.FC<ShareButtonProps> = () => {
       color: '#FFFFFF',
     },
     rootHovered: {
-      background: '#E29682 ',
+      background: '#E29682 !important',
     },
     label: {
       fontWeight: 600,
@@ -65,11 +67,12 @@ export const ShareButton: React.FC<ShareButtonProps> = () => {
 
 
       <CommandBarButton
-        styles={shareButtonStyles}
-        iconProps={isMobile ? { iconName: 'ChevronDown' } : undefined}
-        onClick={openModal}
-        text={isMobile ? '' : 'Dicas KalmarGPT'}
-      />
+          styles={shareButtonStyles}
+          onClick={openModal}
+          text={isMobile ? '' : 'Dicas KalmarGPT'}
+      >
+         {isMobile && <FaLightbulb size={20} color="#FFFFFF" />}
+      </CommandBarButton>
       <Modal
         isOpen={showModal}
         onDismiss={dismissModal}
@@ -79,11 +82,12 @@ export const ShareButton: React.FC<ShareButtonProps> = () => {
       >
         <Stack tokens={{ childrenGap: 10, padding: 10 }}>
           <Stack horizontal horizontalAlign="end">
-            <IconButton
-              iconProps={{ iconName: 'Cancel' }}
+          <IconButton
               onClick={dismissModal}
               ariaLabel="Fechar modal"
-            />
+          >
+              <FaTimes size={20} color="#000" />
+          </IconButton>
           </Stack>
           <h2 style={{ margin: '0 0 0 15px ' }}>FAQ - Como Usar Nosso Chatbot Corporativo</h2>
           <div style={{ margin: '15px' }}>

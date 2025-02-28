@@ -2,6 +2,9 @@ import { useRef, useState, useEffect, useContext, useLayoutEffect } from "react"
 import { CommandBarButton, IconButton, Dialog, DialogType, Stack, Modal, IModalStyles, Spinner } from "@fluentui/react";
 import { DismissRegular, SquareRegular, ShieldLockRegular, ErrorCircleRegular } from "@fluentui/react-icons";
 
+import { FaTrash } from "react-icons/fa";
+
+
 import uuid from 'react-uuid';
 import { isEmpty } from "lodash-es";
 
@@ -734,7 +737,7 @@ const Chat = () => {
                                         background: "radial-gradient(109.81% 107.82% at 100.1% 90.19%, #fbbb00 33.63%, #fac937 70.31%, #f7cd4f 100%)"
                                     },
                                     rootHovered: {
-                                        background: "#E29682 ", 
+                                        background: "#E29682 !important", 
                                     },
                                     rootDisabled: {
                                         background: "#0000"
@@ -742,11 +745,13 @@ const Chat = () => {
                                     }
                                 }}
                                 className={appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured ? styles.newChatIcon : styles.newChatIcon}
-                                iconProps={{ iconName: 'Delete' }}
+                                // iconProps={{ iconName: 'Delete' }}
                                 onClick={appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured ? clearChat : newChat}
                                 disabled={disabledButton()}
-                                aria-label="botão limpar bate-papo"
-                            />
+                                aria-label="botão lâmpada"
+                            >
+                                <FaTrash size={20} color="#FFFFFF" />
+                            </CommandBarButton>
                                
                                 <Dialog
                                     hidden={hideErrorDialog}

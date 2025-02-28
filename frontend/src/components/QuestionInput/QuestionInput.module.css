@@ -56,7 +56,7 @@
     height: 4px;
     left: 0%;
     bottom: 0%;
-    background: radial-gradient(106.04% 106.06% at 100.1% 90.19%,#f30000 33.63%,#E29682 100%);
+    background: radial-gradient(106.04% 106.06% at 100.1% 90.19%,#f30000 33.63%,#E29682 100%) !important;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
 }

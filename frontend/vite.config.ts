@@ -7,7 +7,10 @@ export default defineConfig({
     build: {
         outDir: "../static",
         emptyOutDir: true,
-        sourcemap: true
+        sourcemap: true,
+        rollupOptions: {
+            treeshake: false 
+        }
     },
     server: {
         proxy: {
