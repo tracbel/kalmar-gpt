@@ -7,7 +7,8 @@ export default defineConfig({
     build: {
         outDir: "../static",
         emptyOutDir: true,
-        sourcemap: true,
+        sourcemap: false, 
+        chunkSizeWarningLimit: 1600, 
         rollupOptions: {
             treeshake: false 
         }
