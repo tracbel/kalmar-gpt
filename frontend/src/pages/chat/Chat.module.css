@@ -455,3 +455,29 @@ sup {
     visibility: hidden !important;
     display: none !important;
   }
+
+  .qrCodeFixed {
+    position: absolute;
+    bottom: 80px;
+    right: 3%;
+    background-color: #fff;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 100;
+}
+
+/* .qrCodeFixed:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.2);
+} */
+
+/* Esconde o QR Code no mobile */
+@media (max-width: 768px) {
+    .qrCodeFixed {
+        display: none;
+    }
+}
+
+
