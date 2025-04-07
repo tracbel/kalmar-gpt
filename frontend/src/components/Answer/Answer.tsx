@@ -57,7 +57,7 @@ export const Answer = ({
                  {!isMobile && (
                 <Stack.Item className={styles.answerDisclaimerContainer}>
                  
-                    <span className={styles.answerDisclaimer}>O conteúdo gerado por IA pode estar incorreto</span>
+                    <span className={styles.answerDisclaimer}>O KalmarGPT pode cometer erros. Por isso, é bom checar as respostas com nossos especialistas</span>
                 </Stack.Item>
                  )}
                 </Stack>
