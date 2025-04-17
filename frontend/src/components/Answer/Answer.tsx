@@ -11,6 +11,10 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import supersub from 'remark-supersub'
 
+import { useLanguage } from "../../hooks/useLanguage";
+import { translations } from "../../i18n/translations";
+
+
 interface Props {
     answer: AskResponse;
 }
@@ -18,6 +22,10 @@ interface Props {
 export const Answer = ({
     answer
 }: Props) => {
+
+    const lang = useLanguage();
+    const t = translations[lang];
+
     const [isRefAccordionOpen, { toggle: toggleIsRefAccordionOpen }] = useBoolean(false);
     const filePathTruncationLimit = 50;
 
@@ -57,7 +65,8 @@ export const Answer = ({
                  {!isMobile && (
                 <Stack.Item className={styles.answerDisclaimerContainer}>
                  
-                    <span className={styles.answerDisclaimer}>O KalmarGPT pode cometer erros. Por isso, é bom checar as respostas com nossos especialistas</span>
+                 <span className={styles.answerDisclaimer}>{t.disclaimer}</span>
+
                 </Stack.Item>
                  )}
                 </Stack>

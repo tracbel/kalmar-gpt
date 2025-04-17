@@ -13,11 +13,19 @@ import {
 import { FaLightbulb, FaTimes, FaQrcode, FaMobileAlt } from "react-icons/fa";
 import QRCode from "react-qr-code";
 
+import { useLanguage } from "../../hooks/useLanguage";
+import { translations } from "../../i18n/translations";
+
+
 interface ShareButtonProps extends IButtonProps {
   onClick: () => void;
 }
 
 export const ShareButton: React.FC<ShareButtonProps> = () => {
+
+  const language = useLanguage();
+  const t = translations[language];
+
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [showModal, setShowModal] = useState(false);
   const [showQRModal, setShowQRModal] = useState(false);
@@ -101,7 +109,7 @@ export const ShareButton: React.FC<ShareButtonProps> = () => {
       <CommandBarButton
         styles={shareButtonStyles}
         onClick={openModal}
-        text={isMobile ? "" : "Dicas KalmarGPT"}
+        text={isMobile ? "" :  t.tipsButton}
       >
         {isMobile && <FaLightbulb size={20} color="#FFFFFF" />}
       </CommandBarButton>
@@ -129,57 +137,15 @@ export const ShareButton: React.FC<ShareButtonProps> = () => {
               <FaTimes size={20} color="#000" />
             </IconButton>
           </Stack>
-          <h2 style={{ margin: "0 0 0 15px " }}>
-            FAQ - Como Usar Nosso Chatbot Corporativo
-          </h2>
-          <div style={{ margin: "15px" }}>
-            <p>
-              <strong>
-                Q: Como posso formular minhas perguntas para obter as melhores
-                respostas?
-              </strong>
-            </p>
-            <p>
-              A: Use termos específicos que estão diretamente relacionados ao
-              conteúdo em nossa base de dados.{" "}
-            </p>
-            <p>
-              <strong>
-                Q: O que devo fazer se o chatbot não entender minha pergunta?
-              </strong>
-            </p>
-            <p>
-              A: Tente reformular sua pergunta de forma mais clara e direta. Por
-              exemplo, em vez de "Onde fica a Unidade da Kalmar?", pergunte
-              "Qual é o endereço da sede da Kalmar?".
-            </p>
-            <p>
-              <strong>
-                Q: Posso usar jargões ou termos genéricos nas minhas perguntas?
-              </strong>
-            </p>
-            <p>
-              A: É melhor evitar jargões ou termos genéricos. O chatbot pode não
-              reconhecê-los. Use termos específicos que estão na base de dados.
-            </p>
-            {/* <p>
-              <strong>
-                Q: Como devo perguntar sobre a disponibilidade de um produto?
-              </strong>
-            </p>
-            <p>A: Forneça detalhes específicos. </p> */}
-            <p>
-              <strong>
-                Q: Posso fazer perguntas complexas para o chatbot?
-              </strong>
-            </p>
-            <p>
-              A: Sim, mas é melhor estruturar sua pergunta em partes. Por
-              exemplo, "Quero informações sobre: [Tipo de Equipamento], [Marca],
-              [Localização]". Isso ajuda o chatbot a processar sua solicitação
-              de forma mais eficiente.
-            </p>
-          </div>
+          <h2 style={{ margin: "0 0 0 15px " }}>{t.tipsTitle}</h2>
+
+          {t.tips.map((item, index) => (
+            <div key={index}>
+              <p><strong>Q: {item.q}</strong></p>
+              <p>A: {item.a}</p>
+            </div>
+          ))}
+
         </Stack>
       </Modal>
       <Modal

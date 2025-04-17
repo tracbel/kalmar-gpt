@@ -799,6 +799,13 @@ def generate_title(conversation_messages):
         return title
     except Exception as e:
         return messages[-2]['content']
+    
+@app.route("/<lang_code>")
+def localized_index(lang_code):
+    if lang_code in ["pt", "en"]:
+        return app.send_static_file("index.html")
+    return "Not Found", 404
+
 
 if __name__ == "__main__":
     app.run()

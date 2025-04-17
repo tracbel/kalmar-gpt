@@ -32,6 +32,10 @@ import styles from "./Chat.module.css";
 import Mascote from "../../assets/mascote.png";
 import Kalmar from "../../assets/kalmargpt.png";
 
+import { useLanguage } from "../../hooks/useLanguage";
+import { translations } from "../../i18n/translations";
+
+
 import {
   ChatMessage,
   ConversationRequest,
@@ -54,6 +58,7 @@ import { ChatHistoryPanel } from "../../components/ChatHistory/ChatHistoryPanel"
 import { AppStateContext } from "../../state/AppProvider";
 import { useBoolean } from "@fluentui/react-hooks";
 
+
 const enum messageStatus {
   NotRunning = "Not Running",
   Processing = "Processing",
@@ -61,6 +66,10 @@ const enum messageStatus {
 }
 
 const Chat = () => {
+
+  const language = useLanguage();
+  const t = translations[language];
+
   // TODO: Modal citação
   const [showModal, setShowModal] = useState(false);
   const modalStyles: Partial<IModalStyles> = {
@@ -822,11 +831,9 @@ const Chat = () => {
                   className={styles.chatIcon}
                   aria-hidden="true"
                 />
-                <h1 className={styles.chatEmptyStateTitle}>Vamos conversar?</h1>
-                <h2 className={styles.chatEmptyStateSubtitle}>
-                  Sou uma Inteligência Artificial desenvolvida pela Tracbel,
-                  especializada na marca Kalmar.
-                </h2>
+               <h1 className={styles.chatEmptyStateTitle}>{t.letsTalk}</h1>
+               <h2 className={styles.chatEmptyStateSubtitle}>{t.subtitle}</h2>
+
               </Stack>
             ) : (
               <div
@@ -879,7 +886,7 @@ const Chat = () => {
                                                     answer: "Gerando resposta...",
                                                     citations: []
                                                 }}/> */}
-                    <Spinner label="Gerando resposta..." />
+                    <Spinner label={t.generatingAnswer} />
                   </div>
                 )}
                 <div ref={chatMessageStreamEnd} />
@@ -906,12 +913,8 @@ const Chat = () => {
                     className={styles.stopGeneratingIcon}
                     aria-hidden="true"
                   />
-                  <span
-                    className={styles.stopGeneratingText}
-                    aria-hidden="true"
-                  >
-                    Pare de gerar
-                  </span>
+                  <span className={styles.stopGeneratingText}>{t.stopGenerating}</span>
+
                 </Stack>
               )}
               {/* TODO: Btn chat */}
@@ -966,7 +969,7 @@ const Chat = () => {
               </Stack>
               <QuestionInput
                 clearOnSend
-                placeholder="Digite uma nova pergunta..."
+                placeholder={t.newQuestionPlaceholder}
                 disabled={isLoading}
                 onSend={(question, id) => {
                   appStateContext?.state.isCosmosDBAvailable?.cosmosDB
